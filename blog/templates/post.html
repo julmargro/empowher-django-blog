@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+{% block content %}
+<article class="media content-section">
+    <div class="media-body">
+	    <div class="article-metadata">
+	      <small class="text-muted">{{ post.date_posted}}</small>
+	    </div>
+	    <div>
+	      <table>
+		    <thead>
+		        <td><h2><a class="article-title">{{ post.title }}</a></h2></td>
+		        <td><img class="article-img" src="{{ post.image_file.url }}" width="300" height="200"></td>
+		    </thead>
+		     <tr>
+		        <td></td>
+		        <td><p class="article-content">{{ post.content}}</p></td>
+		      </tr>
+		  </table>
+		</div>
+    </div>
+    <div class="link-to-update">
+        <a class="btn btn-secondary btn-sm m-1" href="{% url 'update-post' post.pk %}">Update</a> 
+        <form action="{% url 'delete-post' post.pk %}" method="POST">
+			{% csrf_token %}
+            <input class="btn btn-danger btn-sm m-1" type="submit" value="Delete">
+        </form>
+    </div>
+</article>
+<section>
+	<h3>Comments</h3>
+	{% for comment in comments %}
+	<div class="media">
+		<div class="media-body">
+			<h5 class="mt-0">{{ comment.author.username }}</h5>
+			<p>{{ comment.content }}</p>
+			<small class="text-muted">{{ comment.date_posted }}</small>
+		</div>
+	</div>
+	{% endfor %}
+</section>
+<section>
+	<h3>Leave a Comment</h3>
+	<form method="POST">
+		{% csrf_token %}
+		{{ form.as_p}}
+		<button type="submit" class="btn btn-primary">Submit</button>
+	</form>
+</section>
+{% endblock content %}

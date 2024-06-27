@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{% block content %}
+{% for post in posts %}
+<article class="media content-section">
+  <div class="media-body">
+    <div class="article-metadata">
+      <small class="text-muted">{{ post.date_posted}}</small>
+    </div>
+    <div>
+      <table>
+        <thead>
+          <td>
+            <h2><a class="article-title" href="{% url 'post-detail' post.pk %}">{{ post.title }}</a></h2>
+          </td>
+          <td></td>
+        </thead>
+        <tr>
+          <td><img class="article-img" src="{{ post.image_file.url }}" width="300" height="200"></td>
+          <td>
+            <p class="article-content">{{ post.content}}</p>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</article>
+{% endfor %}
+{% endblock content %}
